@@ -1,0 +1,42 @@
+{
+  "name": "@solid-native/renderer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Solid universal renderer and transactional native node graph.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./jsx-runtime": {
+      "types": "./dist/jsx-runtime.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./jsx-dev-runtime": {
+      "types": "./dist/jsx-runtime.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@solid-native/host-contract": "workspace:*",
+    "@solid-native/observability": "workspace:*",
+    "@solidjs/universal": "2.0.0-rc.3"
+  },
+  "peerDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  }
+}

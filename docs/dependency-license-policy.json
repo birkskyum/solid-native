@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "scope": "All installed workspace production and development dependencies",
+  "reviewedPackageVersions": 496,
+  "inventorySha256": "892417d6f75948f52fdb5ea9cf5adc117cef017d5270af4a0f8e6223d6d2f16d",
+  "licenseCounts": {
+    "(MIT OR Apache-2.0)": 1,
+    "(MIT OR CC0-1.0)": 1,
+    "0BSD": 2,
+    "Apache-2.0": 13,
+    "BSD-2-Clause": 2,
+    "BSD-3-Clause": 13,
+    "CC-BY-4.0": 1,
+    "ISC": 27,
+    "MIT": 433,
+    "Python-2.0": 1,
+    "Unlicense": 2
+  }
+}

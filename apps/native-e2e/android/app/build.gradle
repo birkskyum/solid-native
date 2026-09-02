@@ -1,0 +1,248 @@
+apply plugin: "com.android.application"
+apply plugin: "com.android.built-in-kotlin"
+apply plugin: "com.facebook.react"
+
+// Apply the package-owned integration through Node package resolution so this
+// shell exercises the same installed artifact contract as an external app.
+def solidNativeAndroidGradle = file(
+    providers.exec {
+        workingDir(rootProject.projectDir)
+        commandLine(
+            "node",
+            "--print",
+            "require.resolve('@solid-native/fabric-host/android-gradle')"
+        )
+    }.standardOutput.asText.get().trim()
+)
+apply from: solidNativeAndroidGradle
+
+def solidNativeEntryFile = providers.environmentVariable("ENTRY_FILE")
+    .orElse("index.tsx")
+    .get()
+
+react {
+    root = file("../../")
+    reactNativeDir = file("../../node_modules/react-native")
+    codegenDir = file("../../node_modules/@react-native/codegen")
+    cliFile = file("../../node_modules/react-native/cli.js")
+    // Make the selected physical-proof entrypoint an actual Gradle task input.
+    // Otherwise two scenarios sharing a flavor can reuse a stale Hermes bundle.
+    entryFile = file("../../${solidNativeEntryFile}")
+    debuggableVariants = [
+        "solidDebug",
+        "solidDevtoolsDebug",
+        "solidDiagnosticsDebug",
+        "reactControlDebug",
+        "solidMemoryDebug",
+        "reactMemoryControlDebug",
+        "solidTelemetryBaselineDebug",
+        "solidTelemetryObservedDebug",
+        "solidListDebug",
+        "solidListRecyclingDebug",
+        "solidNavigationDebug",
+        "solidTabsDebug",
+        "solidWorkletDebug",
+        "reactListControlDebug",
+    ]
+    autolinkLibrariesWithApp()
+}
+
+// React Native's bundle task only tracks JavaScript below `react.root` and
+// deliberately excludes node_modules. The Solid Native workspace packages are
+// resolved through pnpm symlinks, so declare their compiled exports explicitly
+// or Gradle can reuse a Hermes bundle produced before a package rebuild.
+def solidNativeWorkspaceOutputs = rootProject.fileTree("../../../packages") {
+    include "*/dist/**/*.js"
+    include "*/package.json"
+}
+
+tasks.withType(com.facebook.react.tasks.BundleHermesCTask).configureEach { task ->
+    task.inputs.files(solidNativeWorkspaceOutputs)
+        .withPropertyName("solidNativeWorkspaceOutputs")
+        .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+}
+
+android {
+    ndkVersion rootProject.ext.ndkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
+
+    namespace "dev.solidnative.e2e"
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "0.0.1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "boolean", "SOLID_NATIVE_VIEW_RECYCLING", "false"
+        buildConfigField "boolean", "SOLID_NATIVE_WORKLET", "false"
+        buildConfigField "boolean", "SOLID_NATIVE_DEV_RELOAD", "false"
+        buildConfigField "boolean", "SOLID_NATIVE_DEVTOOLS", "false"
+        buildConfigField "boolean", "SOLID_NATIVE_DIAGNOSTICS", "false"
+    }
+
+    flavorDimensions "renderer"
+    productFlavors {
+        solid {
+            dimension "renderer"
+            applicationId "dev.solidnative.e2e"
+            buildConfigField "boolean", "SOLID_NATIVE_DEV_RELOAD", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+        }
+        solidDevtools {
+            dimension "renderer"
+            applicationId "dev.solidnative.e2e"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_DEVTOOLS", "true"
+        }
+        reactControl {
+            dimension "renderer"
+            applicationId "dev.solidnative.control"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+        }
+        solidMemory {
+            dimension "renderer"
+            applicationId "dev.solidnative.memory"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+        }
+        solidDiagnostics {
+            dimension "renderer"
+            applicationId "dev.solidnative.diagnostics"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_DIAGNOSTICS", "true"
+        }
+        reactMemoryControl {
+            dimension "renderer"
+            applicationId "dev.solidnative.memory.control"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+        }
+        solidTelemetryBaseline {
+            dimension "renderer"
+            applicationId "dev.solidnative.telemetry.baseline"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+        }
+        solidTelemetryObserved {
+            dimension "renderer"
+            applicationId "dev.solidnative.telemetry.observed"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+        }
+        solidList {
+            dimension "renderer"
+            applicationId "dev.solidnative.list"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "true"
+        }
+        solidListRecycling {
+            dimension "renderer"
+            applicationId "dev.solidnative.list.recycling"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_VIEW_RECYCLING", "true"
+        }
+        solidTabs {
+            dimension "renderer"
+            applicationId "dev.solidnative.tabs"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+        }
+        solidNavigation {
+            dimension "renderer"
+            applicationId "dev.solidnative.navigation"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+        }
+        solidWorklet {
+            dimension "renderer"
+            applicationId "dev.solidnative.worklet"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_WORKLET", "true"
+        }
+        reactListControl {
+            dimension "renderer"
+            applicationId "dev.solidnative.list.control"
+            buildConfigField "boolean", "SOLID_NATIVE_CONTROL", "true"
+            buildConfigField "boolean", "SOLID_NATIVE_MEMORY", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_BENCHMARK", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_TELEMETRY_ENABLED", "false"
+            buildConfigField "boolean", "SOLID_NATIVE_LIST", "true"
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/jni/CMakeLists.txt"
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // This target is a local physical-device proof, never a
+            // distributable artifact. Keep installation reproducible without
+            // committing a private release key.
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    testBuildType "release"
+}
+
+dependencies {
+    implementation("com.facebook.react:react-android")
+    implementation("com.facebook.react:hermes-android")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    androidTestImplementation("androidx.test:runner:1.7.0")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+}

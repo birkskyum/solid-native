@@ -1,0 +1,46 @@
+{
+  "name": "@solid-native/animation",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bounded UI-worklet protocol and Solid-owned animation sessions.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./solid": {
+      "types": "./dist/solid.d.ts",
+      "default": "./dist/solid.js"
+    },
+    "./native": {
+      "types": "./dist/native.d.ts",
+      "default": "./dist/native.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "default": "./dist/react-native.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --conditions=browser --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  },
+  "dependencies": {
+    "@solid-native/fabric-host": "workspace:*",
+    "@solid-native/renderer": "workspace:*"
+  },
+  "devDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  }
+}

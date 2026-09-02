@@ -1,0 +1,52 @@
+{
+  "name": "@solid-native/notifications",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Validated local notifications and Solid-owned notification events.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./solid": {
+      "types": "./dist/solid.d.ts",
+      "default": "./dist/solid.js"
+    },
+    "./notify-kit-10": {
+      "types": "./dist/notify-kit-10.d.ts",
+      "default": "./dist/notify-kit-10.js"
+    }
+  },
+  "files": [
+    "dist/index.d.ts",
+    "dist/index.d.ts.map",
+    "dist/index.js",
+    "dist/index.js.map",
+    "dist/notify-kit-10.d.ts",
+    "dist/notify-kit-10.d.ts.map",
+    "dist/notify-kit-10.js",
+    "dist/notify-kit-10.js.map",
+    "dist/solid.d.ts",
+    "dist/solid.d.ts.map",
+    "dist/solid.js",
+    "dist/solid.js.map"
+  ],
+  "dependencies": {
+    "@solid-native/core": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --conditions=browser --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  }
+}

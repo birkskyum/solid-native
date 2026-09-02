@@ -1,0 +1,90 @@
+// Package-owned Android application integration for the reviewed React Native boundary.
+// Apply this file only after the Android application and one supported Kotlin plugin.
+
+if (!plugins.hasPlugin("com.android.application")) {
+    throw new GradleException(
+        "@solid-native/fabric-host/android-gradle requires com.android.application"
+    )
+}
+def usesBuiltInKotlin = plugins.hasPlugin("com.android.built-in-kotlin")
+def usesExternalKotlin = plugins.hasPlugin("org.jetbrains.kotlin.android")
+if (!usesBuiltInKotlin && !usesExternalKotlin) {
+    throw new GradleException(
+        "@solid-native/fabric-host/android-gradle requires com.android.built-in-kotlin or org.jetbrains.kotlin.android"
+    )
+}
+
+def fabricHostDirectory = file(
+    providers.exec {
+        workingDir(rootProject.projectDir)
+        commandLine(
+            "node",
+            "--print",
+            "require('path').resolve(require.resolve('@solid-native/fabric-host'), '../..')"
+        )
+    }.standardOutput.asText.get().trim()
+)
+def androidDirectory = new File(fabricHostDirectory, "native/android")
+def cmakeIntegration = new File(androidDirectory, "SolidNativeRuntime.cmake")
+def kotlinDirectory = new File(androidDirectory, "java")
+def boundaryFile = new File(fabricHostDirectory, "native/react-native-boundary.json")
+
+if (!cmakeIntegration.isFile() || !kotlinDirectory.isDirectory() || !boundaryFile.isFile()) {
+    throw new GradleException(
+        "The installed @solid-native/fabric-host package has an incomplete Android native seam at " +
+            androidDirectory
+    )
+}
+
+def boundary = new groovy.json.JsonSlurper().parse(boundaryFile)
+def reactNativeRelease = boundary.reactNativeVersion
+def reactNativeRuntimeMatch = reactNativeRelease instanceof String
+    ? (reactNativeRelease =~ /^(\d+)\.(\d+)\.(\d+)(?:[-+][0-9A-Za-z.-]+)?$/)
+    : null
+if (reactNativeRuntimeMatch == null || !reactNativeRuntimeMatch.matches()) {
+    throw new GradleException(
+        "@solid-native/fabric-host requires an exact React Native release in " +
+            boundaryFile
+    )
+}
+def reactNativeRuntimeParts = [
+    reactNativeRuntimeMatch.group(1),
+    reactNativeRuntimeMatch.group(2),
+    reactNativeRuntimeMatch.group(3),
+]
+
+def integrationProperty = "solidNativeFabricHostDirectory"
+if (project.extensions.extraProperties.has(integrationProperty)) {
+    def configuredDirectory = file(
+        project.extensions.extraProperties.get(integrationProperty)
+    )
+    if (configuredDirectory != fabricHostDirectory) {
+        throw new GradleException(
+            "@solid-native/fabric-host Android integration was already applied from " +
+                configuredDirectory
+        )
+    }
+} else {
+    project.extensions.extraProperties.set(
+        integrationProperty,
+        fabricHostDirectory
+    )
+    android.sourceSets.named("main") { sourceSet ->
+        if (usesBuiltInKotlin) {
+            sourceSet.kotlin.directories.add(kotlinDirectory.absolutePath)
+        } else {
+            // The external Kotlin Android plugin compiles Kotlin files from
+            // Android Java source roots as well as its conventional Kotlin
+            // roots. This keeps the integration compatible with the exact
+            // upstream React Native application template selected by the
+            // reviewed boundary manifest.
+            sourceSet.java.srcDir(kotlinDirectory)
+        }
+    }
+    android.defaultConfig.externalNativeBuild.cmake.arguments(
+        "-DSOLID_NATIVE_FABRIC_HOST_DIR=${fabricHostDirectory.absolutePath}",
+        "-DSOLID_NATIVE_REACT_NATIVE_VERSION_MAJOR=${reactNativeRuntimeParts[0]}",
+        "-DSOLID_NATIVE_REACT_NATIVE_VERSION_MINOR=${reactNativeRuntimeParts[1]}",
+        "-DSOLID_NATIVE_REACT_NATIVE_VERSION_PATCH=${reactNativeRuntimeParts[2]}"
+    )
+}

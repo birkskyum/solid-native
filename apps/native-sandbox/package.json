@@ -1,0 +1,27 @@
+{
+  "name": "@solid-native/native-sandbox",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Solid Native vertical integration and performance validation application.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "tsc -p tsconfig.json --noEmit && node --check scripts/*.mjs",
+    "test": "node --test scripts/*.test.mjs",
+    "start": "node --conditions=browser dist/index.js"
+  },
+  "dependencies": {
+    "@solid-native/core": "workspace:^",
+    "@solid-native/navigation": "workspace:^",
+    "@solid-native/renderer": "workspace:^",
+    "@solid-native/testing": "workspace:^",
+    "solid-js": "2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "@solid-native/compiler": "workspace:^",
+    "@types/node": "^26.2.0"
+  }
+}

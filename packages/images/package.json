@@ -1,0 +1,45 @@
+{
+  "name": "@solid-native/images",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Validated image metadata, prefetch, and cache access with Solid-owned asynchronous work.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "default": "./dist/react-native.js"
+    },
+    "./solid": {
+      "types": "./dist/solid.d.ts",
+      "default": "./dist/solid.js"
+    }
+  },
+  "files": [
+    "dist/index.*",
+    "dist/react-native-adapter.*",
+    "dist/react-native.*",
+    "dist/solid.*"
+  ],
+  "dependencies": {
+    "@solid-native/core": "workspace:*",
+    "@solid-native/react-native-compat": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --conditions=browser --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  }
+}

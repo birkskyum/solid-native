@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 0,
+  "proof": "solid-native-android-release-device",
+  "status": "passed",
+  "measuredAt": "2026-08-24T19:33:41.764Z",
+  "source": {
+    "revision": "024de1df3558d1c910ea9add17fba0f448fd7749",
+    "dirty": false
+  },
+  "device": {
+    "kind": "physical",
+    "serialSha256": "sha256:33bd622a2a74207bfc0ee145473f1b1aa6d1aa36ab3800c39f8caae61a7775da",
+    "manufacturer": "Google",
+    "model": "Pixel 9a",
+    "product": "tegu",
+    "abi": "arm64-v8a",
+    "osVersion": "17",
+    "sdkLevel": 37,
+    "buildFingerprintSha256": "sha256:77bae77fec951fb23550ef4d538a8c6d3cd97389f49e74f6bf73da1323fcc9b7",
+    "batteryLevel": 100,
+    "batteryTemperatureCelsius": 29.5,
+    "lowPowerMode": false
+  },
+  "nativeCompatibility": {
+    "fingerprint": "sha256:69e24aee8f270bfd9c31e2b0ef7953073008b04f7b1165d8abe6735721a6a13f",
+    "inputCount": 103
+  },
+  "generatedBindings": {
+    "bytes": 13297,
+    "fileSha256": "6249ccfdc4c8d7a9a1693205617bb0dc8e7d094a0e1797794310c059bcfbe281",
+    "manifestSha256": "02417cd9a6f844e211959aeb19e1ad298534b1119d95b031d4c124ecbcbb74e4"
+  },
+  "bundle": {
+    "bytes": 6090772,
+    "sha256": "c66a99e8dd8a05baa6c4db0131b08dc9e1415ac93c23c9475ecab68b3d157a04",
+    "sourceCount": 664,
+    "checks": [
+      {
+        "kind": "required-source",
+        "matches": 1,
+        "pattern": "app:///apps/native-e2e/adapters/NotifeeApiModule.ts"
+      },
+      {
+        "kind": "required-source",
+        "matches": 1,
+        "pattern": "app:///apps/native-e2e/generated/SolidNativeBindings.ts"
+      },
+      {
+        "kind": "required-source",
+        "matches": 1,
+        "pattern": "app:///packages/notifications/dist/notify-kit-10.js"
+      },
+      {
+        "kind": "forbidden-fragment",
+        "matches": 0,
+        "pattern": "/node_modules/react-native-notify-kit/"
+      }
+    ]
+  },
+  "artifacts": {
+    "applicationApk": {
+      "bytes": 37190825,
+      "sha256": "d6732daf9b2a15a5d1f121c942bafe37bedce8898e1a889f40aad385c8e2b1e9"
+    },
+    "instrumentationApk": {
+      "bytes": 326549,
+      "sha256": "5a67446afd05fee0837bf0fcd426f9d48b4f1a47aab068f9d987beded00233f7"
+    }
+  },
+  "instrumentation": {
+    "className": "dev.solidnative.e2e.SolidNativePhysicalTest",
+    "durationSeconds": 31.318,
+    "reportedAt": "2026-08-24T19:33:41.000Z",
+    "testName": "testPhysicalRendererUpdate",
+    "resultBytes": 687,
+    "resultSha256": "1ffae4c4990d5972939c195ba6d54f81ff7a35716d6989404ba36cb43424252d",
+    "exitCodeSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+  }
+}

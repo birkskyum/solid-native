@@ -1,0 +1,31 @@
+node_modules/
+dist/
+coverage/
+.DS_Store
+*.log
+
+# Native build products
+**/android/.gradle/
+**/android/build/
+**/android/app/build/
+**/android/app/.cxx/
+**/android/local.properties
+**/ios/Pods/
+**/ios/build/
+apps/native-e2e/build/
+DerivedData/
+apps/native-e2e/ios/.xcode.env.local
+apps/native-e2e/ios/*.xcworkspace/xcuserdata/
+apps/native-e2e/ios/*.xcodeproj/xcuserdata/
+
+# Local configuration and signing material
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.mobileprovision
+*.p12
+
+# Private planning and pre-publication history
+/other/

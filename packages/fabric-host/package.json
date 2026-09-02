@@ -1,0 +1,35 @@
+{
+  "name": "@solid-native/fabric-host",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Framework-neutral host adapter for the pinned React Native Fabric runtime.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./android-gradle": "./native/android/solid-native.gradle",
+    "./ios-podspec": "./native/SolidNativeFabric.podspec",
+    "./react-native-boundary": "./native/react-native-boundary.json"
+  },
+  "files": [
+    "dist",
+    "native",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "boundary:verify": "node scripts/verify-react-native-boundary.mjs",
+    "check": "tsc -p tsconfig.json --noEmit && pnpm boundary:verify",
+    "test": "pnpm build && pnpm boundary:verify && node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@react-native/normalize-colors": "0.87.0",
+    "@solid-native/host-contract": "workspace:*",
+    "@solid-native/react-native-compat": "workspace:*"
+  }
+}

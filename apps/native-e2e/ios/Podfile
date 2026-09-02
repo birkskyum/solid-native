@@ -1,0 +1,77 @@
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+solid_native_fabric_host_native_path = File.dirname(
+  Pod::Executable.execute_command('node', ['--preserve-symlinks', '-p',
+    'require.resolve(
+      "@solid-native/fabric-host/ios-podspec",
+      {paths: [process.argv[1]]},
+    )', __dir__]).strip
+)
+solid_native_fabric_host_native_path = Pathname
+  .new(solid_native_fabric_host_native_path)
+  .relative_path_from(Pathname.new(__dir__))
+  .to_s
+
+# CocoaPods 1.16.2 can intermittently pass a corrupted buffer to
+# Pathname#realdirpath while grouping pnpm-symlinked React Native sources. The
+# same Pathname succeeds when retried; keep the workaround local to pod install
+# until https://github.com/CocoaPods/CocoaPods/issues/12866 is fixed upstream.
+::Pathname.class_eval do
+  unless method_defined?(:solid_native_realdirpath_without_retry)
+    alias_method :solid_native_realdirpath_without_retry, :realdirpath
+
+    def realdirpath(...)
+      attempts = 0
+      begin
+        solid_native_realdirpath_without_retry(...)
+      rescue ArgumentError => error
+        attempts += 1
+        retry if error.message.include?('null byte') && attempts < 10
+        raise
+      end
+    end
+  end
+end
+
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
+
+target 'SolidNativeE2E' do
+  config = use_native_modules!
+  react_native_path = File.realpath(config[:reactNativePath])
+
+  pod 'SolidNativeFabric', :path => solid_native_fabric_host_native_path
+  pod 'SolidNativeGeneratedView', :path => '../native/ios'
+
+  use_react_native!(
+    :path => react_native_path,
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  post_install do |installer|
+    react_native_post_install(
+      installer,
+      react_native_path,
+      :mac_catalyst_enabled => false
+    )
+
+    # CocoaPods resolves pnpm symlinks to a content-addressed store path. Keep
+    # the checked-in application project portable by pointing Xcode back to the
+    # package's stable direct dependency symlink after every pod install.
+    installer.aggregate_targets
+      .map(&:user_project)
+      .compact
+      .uniq
+      .each do |project|
+        project.build_configurations.each do |build_configuration|
+          build_configuration.build_settings['REACT_NATIVE_PATH'] =
+            '${PODS_ROOT}/../../node_modules/react-native'
+        end
+        project.save
+      end
+  end
+end

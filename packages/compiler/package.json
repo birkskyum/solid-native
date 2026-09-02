@@ -1,0 +1,28 @@
+{
+  "name": "@solid-native/compiler",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared OXC compiler pipeline for Solid Native universal JSX.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "scripts": {
+    "check": "node --check index.js",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@dom-expressions/compiler": "0.50.0-next.43",
+    "@jridgewell/remapping": "2.3.5",
+    "oxc-transform": "0.146.0"
+  }
+}

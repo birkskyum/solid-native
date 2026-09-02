@@ -1,0 +1,435 @@
+{
+  "schemaVersion": 0,
+  "packages": [
+    {
+      "packageName": "@react-native-async-storage/async-storage",
+      "packageVersion": "3.1.1",
+      "libraryName": "AsyncStorageSpec",
+      "codegenKind": "modules",
+      "claims": [
+        {
+          "kind": "module",
+          "name": "RNAsyncStorage",
+          "platform": "android",
+          "evidenceLevel": "native-integrated",
+          "evidence": [
+            {
+              "path": "adapters/RNAsyncStorage.ts",
+              "sha256": "306e8176fa74f60ac4d267dcd7a10770c9fb75ab91d33ca4418f76e94eb1718b"
+            },
+            {
+              "path": "scripts/android-navigation-restoration-test.sh",
+              "sha256": "a5a8e431d397282ad84ac8a1287f989a8f3ba3cfb4236d32dbbb1978f0fbd88b"
+            }
+          ]
+        },
+        {
+          "kind": "module",
+          "name": "RNAsyncStorage",
+          "platform": "ios",
+          "evidenceLevel": "binding-generated",
+          "evidence": [
+            {
+              "path": "generated/SolidNativeBindings.ts",
+              "sha256": "9af8c28dbf5f6aa63bd9e833873ae6e42868d72d29088f9f2d975347f5036071"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "packageName": "react-native-notify-kit",
+      "packageVersion": "10.5.0",
+      "libraryName": "NotifeeSpec",
+      "codegenKind": "modules",
+      "claims": [
+        {
+          "kind": "module",
+          "name": "NotifeeApiModule",
+          "platform": "android",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "adapters/NotifeeApiModule.ts",
+              "sha256": "046c51436c7f1b1d67d8e04766078f42f652e16d38b115663f639ac317e8c0f6"
+            },
+            {
+              "path": "generated/SolidNativeBindings.ts",
+              "sha256": "9af8c28dbf5f6aa63bd9e833873ae6e42868d72d29088f9f2d975347f5036071"
+            },
+            {
+              "path": "scripts/android-test.sh",
+              "sha256": "c4ef959faa4c011a53df88e927f2691d130c6b76c4412be1f3512a675824f57f"
+            },
+            {
+              "path": "device-proofs/android-solid-release-pixel-9a-9f067da.json",
+              "sha256": "665049c82c79414e36fc26498d65aaf6380d1530966fa78fc6bd60b42fdddde7"
+            }
+          ]
+        },
+        {
+          "kind": "module",
+          "name": "NotifeeApiModule",
+          "platform": "ios",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "adapters/NotifeeApiModule.ts",
+              "sha256": "046c51436c7f1b1d67d8e04766078f42f652e16d38b115663f639ac317e8c0f6"
+            },
+            {
+              "path": "generated/SolidNativeBindings.ts",
+              "sha256": "9af8c28dbf5f6aa63bd9e833873ae6e42868d72d29088f9f2d975347f5036071"
+            },
+            {
+              "path": "notifications.tsx",
+              "sha256": "c4847da3f03c3f20478da246cd5c3adc8a1944de58861ba4adde04da50e20be8"
+            },
+            {
+              "path": "ios/SolidNativeE2EUITests/SolidNativeE2EUITests.swift",
+              "sha256": "ccee973c98014bab9ef402334e786770dd9dc427f4c1ad30c15b3552481430d0"
+            },
+            {
+              "path": "scripts/ios-notifications-test.sh",
+              "sha256": "73b9870b128da3864742b0c5a26170dc4f353f07e95a9cc4465e59d460590c52"
+            },
+            {
+              "path": "scripts/verify-notifications-sourcemap.mjs",
+              "sha256": "c35c97fd773844246242e449b43da9517a9987d0649f9c97bb0958c95e9b385e"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "packageName": "react-native-screens",
+      "packageVersion": "4.27.0",
+      "libraryName": "rnscreens",
+      "codegenKind": "all",
+      "claims": [
+        {
+          "kind": "interface-only-component",
+          "name": "RNSScreen",
+          "platform": "android",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "navigation-restoration.tsx",
+              "sha256": "30e4fd8cf60db9c0ee736683dca71ad5b9f4a6d9a618c5611ba0adf6609c1701"
+            },
+            {
+              "path": "android/app/src/androidTest/java/dev/solidnative/e2e/SolidNativePhysicalTest.kt",
+              "sha256": "573c8ff67da4b4efb05ecd917e0234bf2149ad25b4666306247f3d41fa0fbb94"
+            },
+            {
+              "path": "scripts/android-navigation-restoration-test.sh",
+              "sha256": "a5a8e431d397282ad84ac8a1287f989a8f3ba3cfb4236d32dbbb1978f0fbd88b"
+            }
+          ]
+        },
+        {
+          "kind": "interface-only-component",
+          "name": "RNSScreenStackHeaderConfig",
+          "platform": "android",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "navigation-restoration.tsx",
+              "sha256": "30e4fd8cf60db9c0ee736683dca71ad5b9f4a6d9a618c5611ba0adf6609c1701"
+            },
+            {
+              "path": "android/app/src/androidTest/java/dev/solidnative/e2e/SolidNativePhysicalTest.kt",
+              "sha256": "573c8ff67da4b4efb05ecd917e0234bf2149ad25b4666306247f3d41fa0fbb94"
+            },
+            {
+              "path": "scripts/android-navigation-restoration-test.sh",
+              "sha256": "a5a8e431d397282ad84ac8a1287f989a8f3ba3cfb4236d32dbbb1978f0fbd88b"
+            }
+          ]
+        },
+        {
+          "kind": "interface-only-component",
+          "name": "RNSScreenStackHeaderSubview",
+          "platform": "android",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "navigation-restoration.tsx",
+              "sha256": "30e4fd8cf60db9c0ee736683dca71ad5b9f4a6d9a618c5611ba0adf6609c1701"
+            },
+            {
+              "path": "android/app/src/androidTest/java/dev/solidnative/e2e/SolidNativePhysicalTest.kt",
+              "sha256": "573c8ff67da4b4efb05ecd917e0234bf2149ad25b4666306247f3d41fa0fbb94"
+            },
+            {
+              "path": "scripts/android-navigation-restoration-test.sh",
+              "sha256": "a5a8e431d397282ad84ac8a1287f989a8f3ba3cfb4236d32dbbb1978f0fbd88b"
+            }
+          ]
+        },
+        {
+          "kind": "component",
+          "name": "RNSScreenStack",
+          "platform": "android",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "scripts/android-navigation-restoration-test.sh",
+              "sha256": "a5a8e431d397282ad84ac8a1287f989a8f3ba3cfb4236d32dbbb1978f0fbd88b"
+            }
+          ]
+        },
+        {
+          "kind": "interface-only-component",
+          "name": "RNSTabsHostAndroid",
+          "platform": "android",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "tabs.tsx",
+              "sha256": "d166cc38d71a6721e7507b1b047fbb996b1f9ea456617b4654712253ac5dfb10"
+            },
+            {
+              "path": "android/app/src/androidTest/java/dev/solidnative/e2e/SolidNativeTabsAppearancePhysicalTest.kt",
+              "sha256": "b98cb1940fd137416a3936c661dce39a36ec71a02cd6250de0a43a1e4135f237"
+            },
+            {
+              "path": "scripts/android-tabs-test.sh",
+              "sha256": "839f61564f44f29b92b4b2fc634358db0f31fc38bdb4c61382107e5296bb2abf"
+            }
+          ]
+        },
+        {
+          "kind": "component",
+          "name": "RNSTabsScreenAndroid",
+          "platform": "android",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "tabs.tsx",
+              "sha256": "d166cc38d71a6721e7507b1b047fbb996b1f9ea456617b4654712253ac5dfb10"
+            },
+            {
+              "path": "android/app/src/androidTest/java/dev/solidnative/e2e/SolidNativeTabsAppearancePhysicalTest.kt",
+              "sha256": "b98cb1940fd137416a3936c661dce39a36ec71a02cd6250de0a43a1e4135f237"
+            },
+            {
+              "path": "scripts/android-tabs-test.sh",
+              "sha256": "839f61564f44f29b92b4b2fc634358db0f31fc38bdb4c61382107e5296bb2abf"
+            }
+          ]
+        },
+        {
+          "kind": "module",
+          "name": "RNSModule",
+          "platform": "android",
+          "evidenceLevel": "schema-discovered",
+          "evidence": []
+        },
+        {
+          "kind": "interface-only-component",
+          "name": "RNSScreen",
+          "platform": "ios",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "tabs.tsx",
+              "sha256": "d166cc38d71a6721e7507b1b047fbb996b1f9ea456617b4654712253ac5dfb10"
+            },
+            {
+              "path": "navigation-restoration.tsx",
+              "sha256": "30e4fd8cf60db9c0ee736683dca71ad5b9f4a6d9a618c5611ba0adf6609c1701"
+            },
+            {
+              "path": "ios/SolidNativeE2EUITests/SolidNativeE2EUITests.swift",
+              "sha256": "ccee973c98014bab9ef402334e786770dd9dc427f4c1ad30c15b3552481430d0"
+            },
+            {
+              "path": "scripts/ios-navigation-restoration-test.sh",
+              "sha256": "43d088b70299080dceac79b4f2e92f2ebea7de8f673587d1ebb8eb3111f1c45e"
+            },
+            {
+              "path": "scripts/ios-tabs-product-test.sh",
+              "sha256": "5f0f0acaa16438094c5c4d09164ee38836817401aa8b11194b2c23e920bbb6e7"
+            }
+          ]
+        },
+        {
+          "kind": "interface-only-component",
+          "name": "RNSModalScreen",
+          "platform": "ios",
+          "evidenceLevel": "native-integrated",
+          "evidence": [
+            {
+              "path": "tabs.tsx",
+              "sha256": "d166cc38d71a6721e7507b1b047fbb996b1f9ea456617b4654712253ac5dfb10"
+            },
+            {
+              "path": "navigation-restoration.tsx",
+              "sha256": "30e4fd8cf60db9c0ee736683dca71ad5b9f4a6d9a618c5611ba0adf6609c1701"
+            },
+            {
+              "path": "ios/SolidNativeE2EUITests/SolidNativeE2EUITests.swift",
+              "sha256": "ccee973c98014bab9ef402334e786770dd9dc427f4c1ad30c15b3552481430d0"
+            },
+            {
+              "path": "scripts/ios-navigation-sheet-test.sh",
+              "sha256": "604921d75ae8a6855b84e5d0e7f5df0bc7bf2c46b799b61a169065373a7df3c2"
+            },
+            {
+              "path": "scripts/ios-tabs-product-test.sh",
+              "sha256": "5f0f0acaa16438094c5c4d09164ee38836817401aa8b11194b2c23e920bbb6e7"
+            }
+          ]
+        },
+        {
+          "kind": "interface-only-component",
+          "name": "RNSScreenStackHeaderConfig",
+          "platform": "ios",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "tabs.tsx",
+              "sha256": "d166cc38d71a6721e7507b1b047fbb996b1f9ea456617b4654712253ac5dfb10"
+            },
+            {
+              "path": "navigation-restoration.tsx",
+              "sha256": "30e4fd8cf60db9c0ee736683dca71ad5b9f4a6d9a618c5611ba0adf6609c1701"
+            },
+            {
+              "path": "ios/SolidNativeE2EUITests/SolidNativeE2EUITests.swift",
+              "sha256": "ccee973c98014bab9ef402334e786770dd9dc427f4c1ad30c15b3552481430d0"
+            },
+            {
+              "path": "scripts/ios-navigation-restoration-test.sh",
+              "sha256": "43d088b70299080dceac79b4f2e92f2ebea7de8f673587d1ebb8eb3111f1c45e"
+            },
+            {
+              "path": "scripts/ios-tabs-product-test.sh",
+              "sha256": "5f0f0acaa16438094c5c4d09164ee38836817401aa8b11194b2c23e920bbb6e7"
+            }
+          ]
+        },
+        {
+          "kind": "interface-only-component",
+          "name": "RNSScreenStackHeaderSubview",
+          "platform": "ios",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "tabs.tsx",
+              "sha256": "d166cc38d71a6721e7507b1b047fbb996b1f9ea456617b4654712253ac5dfb10"
+            },
+            {
+              "path": "navigation-restoration.tsx",
+              "sha256": "30e4fd8cf60db9c0ee736683dca71ad5b9f4a6d9a618c5611ba0adf6609c1701"
+            },
+            {
+              "path": "scripts/ios-navigation-restoration-test.sh",
+              "sha256": "43d088b70299080dceac79b4f2e92f2ebea7de8f673587d1ebb8eb3111f1c45e"
+            },
+            {
+              "path": "ios/SolidNativeE2EUITests/SolidNativeE2EUITests.swift",
+              "sha256": "ccee973c98014bab9ef402334e786770dd9dc427f4c1ad30c15b3552481430d0"
+            },
+            {
+              "path": "scripts/ios-tabs-product-test.sh",
+              "sha256": "5f0f0acaa16438094c5c4d09164ee38836817401aa8b11194b2c23e920bbb6e7"
+            }
+          ]
+        },
+        {
+          "kind": "component",
+          "name": "RNSScreenStack",
+          "platform": "ios",
+          "evidenceLevel": "device-verified",
+          "evidence": [
+            {
+              "path": "tabs.tsx",
+              "sha256": "d166cc38d71a6721e7507b1b047fbb996b1f9ea456617b4654712253ac5dfb10"
+            },
+            {
+              "path": "navigation-restoration.tsx",
+              "sha256": "30e4fd8cf60db9c0ee736683dca71ad5b9f4a6d9a618c5611ba0adf6609c1701"
+            },
+            {
+              "path": "ios/SolidNativeE2EUITests/SolidNativeE2EUITests.swift",
+              "sha256": "ccee973c98014bab9ef402334e786770dd9dc427f4c1ad30c15b3552481430d0"
+            },
+            {
+              "path": "scripts/ios-navigation-restoration-test.sh",
+              "sha256": "43d088b70299080dceac79b4f2e92f2ebea7de8f673587d1ebb8eb3111f1c45e"
+            },
+            {
+              "path": "scripts/ios-tabs-product-test.sh",
+              "sha256": "5f0f0acaa16438094c5c4d09164ee38836817401aa8b11194b2c23e920bbb6e7"
+            }
+          ]
+        },
+        {
+          "kind": "interface-only-component",
+          "name": "RNSTabsHostIOS",
+          "platform": "ios",
+          "evidenceLevel": "native-integrated",
+          "evidence": [
+            {
+              "path": "tabs.tsx",
+              "sha256": "d166cc38d71a6721e7507b1b047fbb996b1f9ea456617b4654712253ac5dfb10"
+            },
+            {
+              "path": "ios/SolidNativeE2E/AppDelegate.swift",
+              "sha256": "fcb28f43289c35475836dd54b3216e753fcfc3f11c0dc5bd9049c65251b84bdd"
+            },
+            {
+              "path": "ios/SolidNativeE2EUITests/SolidNativeE2EUITests.swift",
+              "sha256": "ccee973c98014bab9ef402334e786770dd9dc427f4c1ad30c15b3552481430d0"
+            },
+            {
+              "path": "scripts/ios-tabs-test.sh",
+              "sha256": "dcb29b41c2ddc5719697a7aede0d7a00b779224d4ee4a5cb2e04ec5347362fd7"
+            },
+            {
+              "path": "scripts/ios-tabs-product-test.sh",
+              "sha256": "5f0f0acaa16438094c5c4d09164ee38836817401aa8b11194b2c23e920bbb6e7"
+            }
+          ]
+        },
+        {
+          "kind": "component",
+          "name": "RNSTabsScreenIOS",
+          "platform": "ios",
+          "evidenceLevel": "native-integrated",
+          "evidence": [
+            {
+              "path": "tabs.tsx",
+              "sha256": "d166cc38d71a6721e7507b1b047fbb996b1f9ea456617b4654712253ac5dfb10"
+            },
+            {
+              "path": "ios/SolidNativeE2E/AppDelegate.swift",
+              "sha256": "fcb28f43289c35475836dd54b3216e753fcfc3f11c0dc5bd9049c65251b84bdd"
+            },
+            {
+              "path": "ios/SolidNativeE2EUITests/SolidNativeE2EUITests.swift",
+              "sha256": "ccee973c98014bab9ef402334e786770dd9dc427f4c1ad30c15b3552481430d0"
+            },
+            {
+              "path": "scripts/ios-tabs-test.sh",
+              "sha256": "dcb29b41c2ddc5719697a7aede0d7a00b779224d4ee4a5cb2e04ec5347362fd7"
+            },
+            {
+              "path": "scripts/ios-tabs-product-test.sh",
+              "sha256": "5f0f0acaa16438094c5c4d09164ee38836817401aa8b11194b2c23e920bbb6e7"
+            }
+          ]
+        },
+        {
+          "kind": "module",
+          "name": "RNSModule",
+          "platform": "ios",
+          "evidenceLevel": "schema-discovered",
+          "evidence": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@solid-native/metro",
+  "version": "0.0.0",
+  "private": true,
+  "description": "OXC Solid universal compilation and source-map composition for Metro.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./transform-worker": {
+      "types": "./transform-worker.d.ts",
+      "default": "./transform-worker.js"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "transform-worker.d.ts",
+    "transform-worker.js"
+  ],
+  "scripts": {
+    "check": "node --check index.js && node --check transform-worker.js",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@jridgewell/remapping": "2.3.5",
+    "@jridgewell/trace-mapping": "0.3.31",
+    "@solid-native/compiler": "workspace:^",
+    "metro-transform-worker": "0.87.0",
+    "vlq": "1.0.1"
+  }
+}

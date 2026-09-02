@@ -1,0 +1,41 @@
+{
+  "name": "@solid-native/navigation",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "TanStack Router history synchronization and Solid-owned native presentation.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./react-native-screens-backend": "./backend/react-native-screens-4.27.0.json",
+    "./react-native-screens-patch": "./patches/react-native-screens@4.27.0.patch"
+  },
+  "files": [
+    "backend",
+    "dist",
+    "patches"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.type-tests.json"
+  },
+  "dependencies": {
+    "@solid-native/core": "workspace:*",
+    "@solid-native/host-contract": "workspace:*",
+    "@solid-native/renderer": "workspace:*",
+    "@tanstack/history": "1.162.1",
+    "@tanstack/router-core": "1.171.26"
+  },
+  "peerDependencies": {
+    "react-native-screens": "4.27.0",
+    "solid-js": "2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  }
+}

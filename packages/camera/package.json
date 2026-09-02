@@ -1,0 +1,59 @@
+{
+  "name": "@solid-native/camera",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Validated camera sessions, photo capture, and Solid-owned native previews.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./solid": {
+      "types": "./dist/solid.d.ts",
+      "default": "./dist/solid.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "default": "./dist/react-native.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@solid-native/core": "workspace:*",
+    "@solid-native/fabric-host": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --conditions=browser --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "react-native-nitro-image": "0.15.1",
+    "react-native-nitro-modules": "0.36.5",
+    "react-native-vision-camera": "5.2.2",
+    "solid-js": "2.0.0-rc.3"
+  },
+  "peerDependenciesMeta": {
+    "react-native-nitro-image": {
+      "optional": true
+    },
+    "react-native-nitro-modules": {
+      "optional": true
+    },
+    "react-native-vision-camera": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "react-native-nitro-image": "0.15.1",
+    "react-native-nitro-modules": "0.36.5",
+    "react-native-vision-camera": "5.2.2",
+    "solid-js": "2.0.0-rc.3"
+  }
+}

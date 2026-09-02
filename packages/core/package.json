@@ -1,0 +1,41 @@
+{
+  "name": "@solid-native/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Public Solid Native components and platform APIs.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./jsx-runtime": {
+      "types": "./dist/jsx-runtime.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./jsx-dev-runtime": {
+      "types": "./dist/jsx-runtime.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.type-tests.json"
+  },
+  "dependencies": {
+    "@solid-native/host-contract": "workspace:*",
+    "@solid-native/renderer": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  }
+}

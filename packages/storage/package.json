@@ -1,0 +1,35 @@
+{
+  "name": "@solid-native/storage",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Validated asynchronous key-value storage for Solid Native applications.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./async-storage-3": {
+      "types": "./dist/async-storage-3.d.ts",
+      "default": "./dist/async-storage-3.js"
+    }
+  },
+  "files": [
+    "dist/async-storage-3.d.ts",
+    "dist/async-storage-3.d.ts.map",
+    "dist/async-storage-3.js",
+    "dist/async-storage-3.js.map",
+    "dist/index.d.ts",
+    "dist/index.d.ts.map",
+    "dist/index.js",
+    "dist/index.js.map"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --test test/*.test.mjs"
+  }
+}

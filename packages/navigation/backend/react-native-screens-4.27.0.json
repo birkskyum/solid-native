@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "packageName": "react-native-screens",
+  "packageVersion": "4.27.0",
+  "reactNativeVersion": "0.87.0",
+  "patch": {
+    "path": "patches/react-native-screens@4.27.0.patch",
+    "sha256": "83e68ebe9f914a58bed4de9291780984479d6fdf3263f4acd59d6de4459d80d7"
+  },
+  "installedFiles": [
+    {
+      "path": "android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreen.kt",
+      "sha256": "578b945832ba8029b29e06f1f7fa10151a757829a03851ebf02f9a8d960886b2"
+    },
+    {
+      "path": "android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreenViewManager.kt",
+      "sha256": "8ab14420fef0705a765242be5bb6ac27921674dfb55437ce65cc4e6ec5ccb0fd"
+    },
+    {
+      "path": "ios/tabs/RNSTabBarAppearanceCoordinator.mm",
+      "sha256": "7f5605dc479e89fce19463418a9ccf226a1c9ac31435bb16418ba5975e876b74"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "formatVersion": 1,
+  "scenarios": {
+    "counter press": {
+      "maxReruns": 1,
+      "maxWastedRuns": 0,
+      "scopes": {
+        "/^counter/": 1
+      },
+      "native": {
+        "maxCommits": 3,
+        "maxMutations": 16,
+        "maxCommitsPerRender": 3,
+        "maxMutationsPerCommit": 8
+      }
+    }
+  }
+}

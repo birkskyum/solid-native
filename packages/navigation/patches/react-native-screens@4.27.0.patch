@@ -1,0 +1,169 @@
+diff --git a/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreen.kt b/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreen.kt
+--- a/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreen.kt
++++ b/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreen.kt
+@@ -9,7 +9,8 @@
+ import com.swmansion.rnscreens.gamma.common.container.Container
+ import com.swmansion.rnscreens.gamma.common.container.ContainerItem
+ import com.swmansion.rnscreens.gamma.common.container.ContainerItemSupport
+-import com.swmansion.rnscreens.gamma.helpers.getSystemDrawableResource
++import com.swmansion.rnscreens.gamma.helpers.IconResolution
++import com.swmansion.rnscreens.gamma.helpers.PropIconResolver
+ import com.swmansion.rnscreens.gamma.scrollviewmarker.ScrollViewMarker
+ import com.swmansion.rnscreens.gamma.scrollviewmarker.ScrollViewSeeking
+ import com.swmansion.rnscreens.gamma.tabs.appearance.TabsAppearance
+@@ -78,18 +79,15 @@
+     // endregion
+
+     // region Icon
+-    var drawableIconResourceName: String? by Delegates.observable(null) { _, oldValue, newValue ->
+-        if (newValue != oldValue) {
+-            icon = getSystemDrawableResource(reactContext, newValue)
+-        }
+-    }
++    private val iconResolver = PropIconResolver()
++    private val selectedIconResolver = PropIconResolver()
+
+-    var selectedDrawableIconResourceName: String? by Delegates.observable(null) { _, oldValue, newValue ->
+-        if (newValue != oldValue) {
+-            selectedIcon = getSystemDrawableResource(reactContext, newValue)
+-        }
+-    }
++    var drawableIconResourceName: String? = null
++    var imageIconResourceUri: String? = null
+
++    var selectedDrawableIconResourceName: String? = null
++    var selectedImageIconResourceUri: String? = null
++
+     var icon: Drawable? by Delegates.observable(null) { _, oldValue, newValue ->
+         updateMenuItemAttributesIfNeeded(oldValue, newValue)
+     }
+@@ -98,6 +96,23 @@
+         updateMenuItemAttributesIfNeeded(oldValue, newValue)
+     }
+
++    internal fun reconcileIconResources() {
++        iconResolver.resolve(reactContext, drawableIconResourceName, imageIconResourceUri) { resolution ->
++            if (resolution is IconResolution.Resolved) {
++                icon = resolution.drawable
++            }
++        }
++        selectedIconResolver.resolve(
++            reactContext,
++            selectedDrawableIconResourceName,
++            selectedImageIconResourceUri,
++        ) { resolution ->
++            if (resolution is IconResolution.Resolved) {
++                selectedIcon = resolution.drawable
++            }
++        }
++    }
++
+     // endregion
+
+     var shouldUseRepeatedTabSelectionScrollToTopSpecialEffect: Boolean = true
+diff --git a/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreenViewManager.kt b/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreenViewManager.kt
+--- a/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreenViewManager.kt
++++ b/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreenViewManager.kt
+@@ -8,7 +8,6 @@
+ import com.facebook.react.uimanager.ViewManagerDelegate
+ import com.facebook.react.viewmanagers.RNSTabsScreenAndroidManagerDelegate
+ import com.facebook.react.viewmanagers.RNSTabsScreenAndroidManagerInterface
+-import com.swmansion.rnscreens.gamma.helpers.loadImage
+ import com.swmansion.rnscreens.gamma.helpers.makeEventRegistrationInfo
+ import com.swmansion.rnscreens.gamma.helpers.readOptionalBoolean
+ import com.swmansion.rnscreens.gamma.helpers.readOptionalColor
+@@ -139,30 +138,21 @@
+         view: TabsScreen,
+         value: ReadableMap?,
+     ) {
+-        val uri = value?.getString("uri")
+-        if (uri != null) {
+-            loadImage(view.context, uri) { drawable ->
+-                if (drawable != null) {
+-                    view.icon = drawable
+-                }
+-            }
+-        }
++        view.imageIconResourceUri = value?.getString("uri")
+     }
+
+     override fun setSelectedImageIconResource(
+         view: TabsScreen,
+         value: ReadableMap?,
+     ) {
+-        val uri = value?.getString("uri")
+-        if (uri != null) {
+-            loadImage(view.context, uri) { drawable ->
+-                if (drawable != null) {
+-                    view.selectedIcon = drawable
+-                }
+-            }
+-        }
++        view.selectedImageIconResourceUri = value?.getString("uri")
+     }
+
++    override fun onAfterUpdateTransaction(view: TabsScreen) {
++        super.onAfterUpdateTransaction(view)
++        view.reconcileIconResources()
++    }
++
+     override fun setStandardAppearance(
+         view: TabsScreen,
+         value: ReadableMap?,
+diff --git a/ios/tabs/RNSTabBarAppearanceCoordinator.mm b/ios/tabs/RNSTabBarAppearanceCoordinator.mm
+--- a/ios/tabs/RNSTabBarAppearanceCoordinator.mm
++++ b/ios/tabs/RNSTabBarAppearanceCoordinator.mm
+@@ -100,14 +100,23 @@
+
+     // Normal icon
+     if (screenView.iconImageSource != nil) {
+-      [RNSImageLoadingHelper loadImageFromSource:screenView.iconImageSource
++      RCTImageSource *requestedImageSource = screenView.iconImageSource;
++      RNSTabsIconType requestedIconType = screenView.iconType;
++      [RNSImageLoadingHelper loadImageFromSource:requestedImageSource
+                                  withImageLoader:imageLoader
+                                       asTemplate:isTemplate
+                                  completionBlock:^(UIImage *image) {
+-                                   [self updateTabBarItem:weakTabBarItem
++                                   RNSTabsScreenComponentView *strongScreenView = weakScreenView;
++                                   UITabBarItem *strongTabBarItem = weakTabBarItem;
++                                   if (strongScreenView == nil || strongTabBarItem == nil ||
++                                       strongScreenView.iconImageSource != requestedImageSource ||
++                                       strongScreenView.iconType != requestedIconType) {
++                                     return;
++                                   }
++                                   [self updateTabBarItem:strongTabBarItem
+                                                 withImage:image
+                                                isSelected:NO
+-                                            forScreenView:weakScreenView];
++                                            forScreenView:strongScreenView];
+                                  }];
+     } else {
+       tabBarItem.image = nil;
+@@ -115,14 +124,23 @@
+
+     // Selected icon
+     if (screenView.selectedIconImageSource != nil) {
+-      [RNSImageLoadingHelper loadImageFromSource:screenView.selectedIconImageSource
++      RCTImageSource *requestedImageSource = screenView.selectedIconImageSource;
++      RNSTabsIconType requestedIconType = screenView.iconType;
++      [RNSImageLoadingHelper loadImageFromSource:requestedImageSource
+                                  withImageLoader:imageLoader
+                                       asTemplate:isTemplate
+                                  completionBlock:^(UIImage *image) {
+-                                   [self updateTabBarItem:weakTabBarItem
++                                   RNSTabsScreenComponentView *strongScreenView = weakScreenView;
++                                   UITabBarItem *strongTabBarItem = weakTabBarItem;
++                                   if (strongScreenView == nil || strongTabBarItem == nil ||
++                                       strongScreenView.selectedIconImageSource != requestedImageSource ||
++                                       strongScreenView.iconType != requestedIconType) {
++                                     return;
++                                   }
++                                   [self updateTabBarItem:strongTabBarItem
+                                                 withImage:image
+                                                isSelected:YES
+-                                            forScreenView:weakScreenView];
++                                            forScreenView:strongScreenView];
+                                  }];
+     } else {
+       tabBarItem.selectedImage = nil;

@@ -1,0 +1,65 @@
+{
+  "name": "@solid-native/networking",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bounded incremental native text transport with Solid-owned request lifetimes and causal chunks.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./json": {
+      "types": "./dist/json.d.ts",
+      "default": "./dist/json.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "default": "./dist/react-native.js"
+    },
+    "./server-events": {
+      "types": "./dist/server-events.d.ts",
+      "default": "./dist/server-events.js"
+    },
+    "./solid-json": {
+      "types": "./dist/solid-json.d.ts",
+      "default": "./dist/solid-json.js"
+    },
+    "./solid-server-events": {
+      "types": "./dist/solid-server-events.d.ts",
+      "default": "./dist/solid-server-events.js"
+    },
+    "./solid": {
+      "types": "./dist/solid.d.ts",
+      "default": "./dist/solid.js"
+    }
+  },
+  "files": [
+    "dist/index.*",
+    "dist/json.*",
+    "dist/react-native-adapter.*",
+    "dist/react-native.*",
+    "dist/server-events.*",
+    "dist/solid-json.*",
+    "dist/solid-server-events.*",
+    "dist/solid.*"
+  ],
+  "dependencies": {
+    "@solid-native/core": "workspace:*",
+    "@solid-native/react-native-compat": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --conditions=browser --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  }
+}

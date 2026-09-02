@@ -1,0 +1,60 @@
+{
+  "name": "@solid-native/devtools",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bounded local diagnostics for Solid Native errors, network activity, and causal traces.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./solid": {
+      "types": "./dist/solid.d.ts",
+      "default": "./dist/solid.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "default": "./dist/react-native.js"
+    },
+    "./network": {
+      "types": "./dist/network.d.ts",
+      "default": "./dist/network.js"
+    },
+    "./network-service": {
+      "types": "./dist/network-service.d.ts",
+      "default": "./dist/network-service.js"
+    },
+    "./root": {
+      "types": "./dist/root.d.ts",
+      "default": "./dist/root.js"
+    },
+    "./solid-diagnostics": {
+      "types": "./dist/solid-diagnostics.d.ts",
+      "default": "./dist/solid-diagnostics.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm --filter '@solid-native/devtools...' build && node --conditions=browser --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@solid-native/core": "workspace:*",
+    "@solid-native/networking": "workspace:*",
+    "@solid-native/observability": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "@solid-native/testing": "workspace:*",
+    "solid-js": "2.0.0-rc.3"
+  }
+}

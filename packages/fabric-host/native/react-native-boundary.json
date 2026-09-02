@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "reactNativeVersion": "0.87.0",
+  "nativeHeaders": [
+    "React/RCTBridge.h",
+    "React/RCTConstants.h",
+    "React/RCTFabricSurface.h",
+    "React/RCTReactNativeFactory.h",
+    "React/RCTReloadCommand.h",
+    "React/RCTRootViewFactory.h",
+    "React/RCTScheduler.h",
+    "React/RCTSurfacePresenter.h",
+    "React/RCTSurfaceView.h",
+    "React/RCTUtils.h",
+    "ReactCommon/RCTHost.h",
+    "ReactCommon/RCTTurboModule.h",
+    "React_RCTAppDelegate/RCTJSRuntimeConfiguratorProtocol.h",
+    "cxxreact/ReactNativeVersion.h",
+    "fbjni/fbjni.h",
+    "folly/dynamic.h",
+    "jsi/JSIDynamic.h",
+    "jsi/jsi.h",
+    "react/renderer/core/EventListener.h",
+    "react/renderer/core/InstanceHandle.h",
+    "react/renderer/core/RawEvent.h",
+    "react/renderer/core/RawProps.h",
+    "react/renderer/core/ReactPrimitives.h",
+    "react/renderer/core/ShadowNode.h",
+    "react/renderer/core/ShadowNodeFamily.h",
+    "react/renderer/dom/DOM.h",
+    "react/renderer/mounting/MountingCoordinator.h",
+    "react/renderer/mounting/ShadowTree.h",
+    "react/renderer/runtimescheduler/RuntimeScheduler.h",
+    "react/renderer/runtimescheduler/RuntimeSchedulerBinding.h",
+    "react/renderer/scheduler/SurfaceHandler.h",
+    "react/renderer/uimanager/UIManager.h",
+    "react/renderer/uimanager/UIManagerBinding.h",
+    "react/renderer/uimanager/UIManagerMountHook.h",
+    "react/runtime/JSRuntimeFactoryCAPI.h",
+    "react/runtime/jni/JBindingsInstaller.h"
+  ],
+  "generatedCodegenHeaders": [
+    "SolidNativeAppSpec/SolidNativeAppSpec.h",
+    "SolidNativeE2ESpec/SolidNativeE2ESpec.h"
+  ],
+  "androidImports": [
+    "com.facebook.jni.HybridData",
+    "com.facebook.jni.annotations.DoNotStrip",
+    "com.facebook.react.BaseReactPackage",
+    "com.facebook.react.ReactHost",
+    "com.facebook.react.bridge.Arguments",
+    "com.facebook.react.bridge.NativeModule",
+    "com.facebook.react.bridge.Promise",
+    "com.facebook.react.bridge.ReactApplicationContext",
+    "com.facebook.react.bridge.ReactMethod",
+    "com.facebook.react.interfaces.TaskInterface",
+    "com.facebook.react.interfaces.fabric.ReactSurface",
+    "com.facebook.react.module.annotations.ReactModule",
+    "com.facebook.react.module.model.ReactModuleInfo",
+    "com.facebook.react.module.model.ReactModuleInfoProvider",
+    "com.facebook.react.modules.i18nmanager.I18nUtil",
+    "com.facebook.react.runtime.BindingsInstaller",
+    "com.facebook.soloader.SoLoader"
+  ],
+  "cocoapods": [
+    {
+      "name": "RCT-Folly",
+      "version": null
+    },
+    {
+      "name": "React-Fabric/core",
+      "version": "= 0.87.0"
+    },
+    {
+      "name": "React-Fabric/mounting",
+      "version": "= 0.87.0"
+    },
+    {
+      "name": "React-Fabric/uimanager",
+      "version": "= 0.87.0"
+    },
+    {
+      "name": "React-RCTFabric",
+      "version": "= 0.87.0"
+    },
+    {
+      "name": "React-RuntimeApple",
+      "version": "= 0.87.0"
+    },
+    {
+      "name": "React-jsi",
+      "version": "= 0.87.0"
+    },
+    {
+      "name": "ReactCodegen",
+      "version": null
+    }
+  ],
+  "androidCmake": {
+    "reactNativeIncludeDirectories": [
+      "${REACT_ANDROID_DIR}/../ReactCommon",
+      "${REACT_ANDROID_DIR}/src/main/jni"
+    ],
+    "inheritedCompileOptions": ["${folly_FLAGS}"]
+  }
+}

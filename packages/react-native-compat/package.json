@@ -1,0 +1,24 @@
+{
+  "name": "@solid-native/react-native-compat",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The reviewed React Native package, runtime, and Hermes compatibility contract for Solid Native.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --test test/*.test.mjs"
+  }
+}

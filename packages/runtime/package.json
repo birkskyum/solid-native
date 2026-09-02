@@ -1,0 +1,48 @@
+{
+  "name": "@solid-native/runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Solid Native application bootstrap and host capability validation.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native-platform-services.d.ts",
+      "default": "./dist/react-native-platform-services.js"
+    },
+    "./react-native-causal-debug": {
+      "types": "./dist/react-native-causal-debug.d.ts",
+      "default": "./dist/react-native-causal-debug.js"
+    }
+  },
+  "files": [
+    "dist/index.*",
+    "dist/native-debug-handler.*",
+    "dist/platform-services.*",
+    "dist/react-native-causal-debug.*",
+    "dist/react-native-platform-services.*"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@solid-native/fabric-host": "workspace:*",
+    "@solid-native/host-contract": "workspace:*",
+    "@solid-native/observability": "workspace:*",
+    "@solid-native/react-native-compat": "workspace:*",
+    "@solid-native/renderer": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  },
+  "devDependencies": {
+    "solid-js": "2.0.0-rc.3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@solid-native/codegen",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "React-free Solid component and TurboModule bindings from React Native Codegen schemas.",
+  "engines": {
+    "node": "^22.13.0 || ^24.3.0 || >=26.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@react-native/codegen": "0.87.0",
+    "@solid-native/host-contract": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0"
+  }
+}
